@@ -1,5 +1,6 @@
 package com.haduart.rest.decision;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -13,26 +14,20 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 
-@Path("decision")
-@Consumes({"application/json"})
-@Produces({"application/json"})
 @Stateless
+@LocalBean
 public class DecisionService {
     @PersistenceContext
     EntityManager em;
 
-    @Path("/")
-    @GET
-    public Response listPurchases(@Context final UriInfo ui,
-                                  @DefaultValue("") @QueryParam("email") final String email) {
+    public Response listPurchases(final UriInfo ui,
+                                  final String email) {
         return Response.ok().
                 entity(queryUser(email))
                 .build();
     }
 
-    @Path("/")
-    @POST
-    public Response purchase(@Context final UriInfo uriInfo, final Purchase purchase) {
+    public Response purchase(final UriInfo uriInfo, final Purchase purchase) {
         if (purchase.getAmount() > 1000)
             return generateResponse(false, "amount");
 

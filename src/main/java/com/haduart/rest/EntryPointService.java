@@ -1,6 +1,7 @@
 package com.haduart.rest;
 
 import com.haduart.rest.decision.DecisionService;
+import com.haduart.rest.decision.RestService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +22,7 @@ public class EntryPointService {
         ArrayList<GenericReference> services = new ArrayList<GenericReference>();
 
         services.add(new GenericReference(UriBuilder.fromUri(baseURI)
-                .path(DecisionService.class).build().getRawPath()
+                .path(RestService.class).build().getRawPath()
                 , "decision"));
 
         return Response.ok(services).build();
